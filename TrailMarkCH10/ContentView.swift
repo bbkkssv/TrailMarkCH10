@@ -10,6 +10,8 @@ struct ContentView: View {
                 .tabItem { Label("Today", systemImage: "sun.max.fill") }
             FieldJournalView()
                 .tabItem { Label("Journal", systemImage: "waveform") }
+            RecoveryView()
+                .tabItem { Label("Recovery", systemImage: "bed.double.fill") }
         }
         .task {
             await model.health.requestAuthorization()
