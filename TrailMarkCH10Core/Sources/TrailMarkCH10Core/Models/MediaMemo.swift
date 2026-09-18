@@ -31,6 +31,9 @@ public struct MediaMemo: Identifiable, Hashable, Sendable, Codable {
     public let duration: TimeInterval
     public let title: String
     
+    public var latitude: Double?
+    public var longitude: Double?
+    
     public init(
         id: UUID = UUID(),
         kind: MemoKind,
@@ -38,6 +41,8 @@ public struct MediaMemo: Identifiable, Hashable, Sendable, Codable {
         createdAt: Date = Date(),
         duration: TimeInterval = 0,
         title: String = "",
+        longitude: Double? = nil,
+        latitude: Double? = nil
     ) {
         self.id = id
         self.kind = kind
@@ -45,6 +50,18 @@ public struct MediaMemo: Identifiable, Hashable, Sendable, Codable {
         self.createdAt = createdAt
         self.duration = duration
         self.title = title
+        self.longitude = longitude
+        self.latitude = latitude
+    }
+    
+    public var coordinate: CLLocationCoordinate2D? {
+        guard let latitude, let longitude else { return nil }
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+    
+    public mutating func setCoordinate(_ coordinate: CLLocationCoordinate2D?) {
+        latitude = coordinate?.latitude
+        longitude = coordinate?.longitude
     }
     
     // MARK: - UI Display Helpers

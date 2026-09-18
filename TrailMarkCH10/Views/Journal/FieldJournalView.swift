@@ -49,7 +49,8 @@ struct FieldJournalView: View {
                     model.media.add(
                         kind: .video,
                         movingFileFrom: url,
-                        duration: duration
+                        duration: duration,
+                        coordinate: model.location.currentCoordinate
                     )
                 }
             }

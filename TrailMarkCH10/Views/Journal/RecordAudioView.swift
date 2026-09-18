@@ -69,10 +69,11 @@ struct RecordAudioView: View {
     
     private func finish() {
         guard let result = recorder.stop() else { return }
-        model.media.add(
+        _ = try? model.media.add(
             kind: .audio,
             movingFileFrom: result.url,
             duration: result.duration,
+            coordinate: model.location.currentCoordinate
         )
         dismiss()
     }

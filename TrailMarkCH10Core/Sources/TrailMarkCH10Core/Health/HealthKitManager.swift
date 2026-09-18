@@ -118,8 +118,8 @@ public final class HealthKitManager {
                 sampleType: sleepType,
                 predicate: timePredicate,
                 limit: HKObjectQueryNoLimit,
-                sortDescriptors: nil
-            ) { _, results, _ in
+                sortDescriptors: nil // Default data will be return in Desc order
+            ) { _, results, _ in // results is an array of samples; (HKSamples) -> quantity, category, charactestic
                 continuation.resume(returning: (results as? [HKCategorySample]) ?? [])
             }
 
