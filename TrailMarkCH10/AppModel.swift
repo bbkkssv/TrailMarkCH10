@@ -8,4 +8,5 @@ final class AppModel {
     let health = HealthKitManager()
     let media = MediaStore()
     let location = LocationManager()
+    let journeyStore = JourneyStore()
 }

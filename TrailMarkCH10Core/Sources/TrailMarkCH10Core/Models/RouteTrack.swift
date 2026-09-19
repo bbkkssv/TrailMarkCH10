@@ -68,4 +68,6 @@ public struct RouteTrack: Hashable, Sendable, Codable {
         
         return total
     }
+    
+    public var isEmpty: Bool { points.isEmpty }
 }
