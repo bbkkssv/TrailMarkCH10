@@ -6,16 +6,43 @@
 //
 
 import SwiftUI
+import TrailMarkCH10Core
 
 struct ContentView: View {
+    @State private var health = HealthKitManager()
+    @State private var journeyStarted = false
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        VStack(spacing: 10) {
+            VStack(spacing: 2) {
+                Text("Today")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+
+                Text(health.todaysSummary.stepsText)
+                    .font(.system(size: 40, weight: .bold, design: .rounded))
+                    .minimumScaleFactor(0.7)
+                    .contentTransition(.numericText())
+
+                Label("steps", systemImage: "figure.walk")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .frame(maxWidth: .infinity)
+
+            Button {
+                journeyStarted = true
+            } label: {
+                Label(journeyStarted ? "Journey Ready" : "Start Journey", systemImage: "location.fill")
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.green)
         }
-        .padding()
+        .padding(.horizontal)
+        .task {
+            await health.requestAuthorization()
+            await health.refreshTodaysSummary()
+        }
     }
 }
 
