@@ -9,12 +9,12 @@ public struct ActivitySummary: Sendable, Equatable, Codable {
     
     public init(
         steps: Double = 0,
-        distanceMeteres: Double = 0,
+        distanceMeters: Double = 0,
         activeEnergyKcal: Double = 0,
         date: Date = Date()
     ) {
         self.steps = steps
-        self.distanceMeters = distanceMeteres
+        self.distanceMeters = distanceMeters
         self.activeEnergyKcal = activeEnergyKcal
         self.date = date
     }

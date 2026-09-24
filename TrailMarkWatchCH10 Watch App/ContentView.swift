@@ -1,51 +1,52 @@
-//
-//  ContentView.swift
-//  TrailMarkWatchCH10 Watch App
-//
-//  Created by Ramses Garcia on 05/09/26.
-//
-
 import SwiftUI
 import TrailMarkCH10Core
 
 struct ContentView: View {
-    @State private var health = HealthKitManager()
-    @State private var journeyStarted = false
+    @Environment(WatchModel.self) private var model
 
     var body: some View {
-        VStack(spacing: 10) {
-            VStack(spacing: 2) {
-                Text("Today")
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
+        NavigationStack {
+            List {
+                // Main Screen
+                WristHomeView()
 
-                Text(health.todaysSummary.stepsText)
-                    .font(.system(size: 40, weight: .bold, design: .rounded))
-                    .minimumScaleFactor(0.7)
-                    .contentTransition(.numericText())
+                // Navigation Menu
+                Section {
+                    NavigationLink {
+                        WristHomeView()
+                    } label: {
+                        Label("Wrist Home", systemImage: "figure.walk")
+                    }
 
-                Label("steps", systemImage: "figure.walk")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    NavigationLink {
+                        WristMemoView()
+                    } label: {
+                        Label("Wrist Memo", systemImage: "mic.fill")
+                    }
+
+                    NavigationLink {
+                        LiveVitalsView()
+                    } label: {
+                        Label("Live Vitals", systemImage: "heart.fill")
+                    }
+
+                    NavigationLink {
+                        MotionView()
+                    } label: {
+                        Label("Motion", systemImage: "waveform.path.ecg")
+                    }
+                }
             }
-            .frame(maxWidth: .infinity)
-
-            Button {
-                journeyStarted = true
-            } label: {
-                Label(journeyStarted ? "Journey Ready" : "Start Journey", systemImage: "location.fill")
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(.green)
         }
-        .padding(.horizontal)
+        .navigationTitle("TrailMark WatchOS")
         .task {
-            await health.requestAuthorization()
-            await health.refreshTodaysSummary()
+            await model.health.requestAuthorization()
+            await model.health.refreshTodaysSummary()
         }
     }
 }
 
 #Preview {
     ContentView()
+        .environment(WatchModel())
 }

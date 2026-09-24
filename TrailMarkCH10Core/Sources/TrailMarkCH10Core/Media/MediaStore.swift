@@ -20,7 +20,7 @@ public final class MediaStore {
 
     // We will define a specific location (unmutable)
     public var mediaDirectory: URL {
-        let base = fileManager.urls(for: .applicationDirectory, in: .userDomainMask)[0] // ramsesg/home/trailmarkch10
+        let base = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0] // ramsesg/home/trailmarkch10
         let dir = base.appendingPathComponent("Media", isDirectory: true) // ramsesg/home/trailmarkch10/Media
         
         if !fileManager.fileExists(atPath: dir.path) {
